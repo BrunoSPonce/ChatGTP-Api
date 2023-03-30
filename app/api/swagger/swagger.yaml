@@ -1,0 +1,64 @@
+swagger: '2.0'
+info:
+  description: 'API ChatGpt'
+  version: '1.0.0'
+  title: 'API ChatGpt'
+  contact:
+    email: 'localhost@localhost.com'
+host: 'localhost:80'
+basePath: '/chat/api'
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+tags:
+  - name: Chat
+
+paths:
+# Chat resource#
+  /v1/chat:
+    x-swagger-router-controller: gptController
+    get:
+      tags:
+        - Chat
+      summary: 'Sends a message to chatGPT API and retrieves its answer'
+      description: 'Sends a message to chatGPT API and retrieves its answer'
+      operationId: chat
+      parameters:
+        - in: query
+          name: message
+          type: string
+          required: false
+      responses:
+        "200":
+          description: Ok
+          schema:
+            $ref: '#/definitions/getResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/errorResponse'
+        "500":
+          description: Internal Server error
+          schema:
+            $ref: '#/definitions/errorResponse'
+
+# Definitions #
+definitions:
+  # common #
+  errorResponse:
+    type: object
+    properties:
+      message:
+        type: string
+  getResponse:
+    type: string
+    properties:
+      data:
+        type: string          
